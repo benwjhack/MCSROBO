@@ -1,0 +1,20 @@
+Using the simulator on Windows
+==============================
+
+On your desktop you will find a folder named `Portable Python`, which contains a
+file called `PyScripter-Portable.exe`. Double-click this to open the PyScripter
+development environment.
+
+Open the file named `run.py` in the `robot-sim` folder on your desktop. This
+program allows you to launch the simulator. To try it out, run it (by clicking
+the green play icon on the toolbar, or pressing Ctrl+F9). A dialog box will ask
+you for a program name. Enter `test.py` (without the quotes) and press ENTER.
+A test program will run in a simulated arena. (You may need to bring the
+simulator window to the front by clicking on it in your taskbar.)
+
+To create your own program, click File > New. The new file should contain the
+code you need to get started. Write your code as normal. Save the file in the
+`robot-sim` folder on your Desktop.
+
+To run your program, run `run.py`, like you did before. Enter the name of your
+code file (including the `.py`) into the dialog box and press ENTER.
