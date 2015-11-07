@@ -18,7 +18,7 @@ ARENA_MARKINGS_WIDTH = 2
 
 import pygame
 
-myimage = pygame.image.load(r"C:\Users\Ben\b\sim\robot-sim\sr\robot\arenas\download.jpg")
+myimage = pygame.image.load(r"sr/download.jpg")
 imagerect = myimage.get_rect()
 
 def lerp(delta, a, b):
