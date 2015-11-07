@@ -9,6 +9,7 @@ DEFAULT_GAME = 'liam'
 
 GAMES = {'pirate-plunder': PiratePlunderArena,
          'ctf': CTFArena, 'liam': LiamArena}
+GAME_CODES = {'pirate-plunder':0, 'ctf':1, 'liam': 2}
 
 class Simulator(object):
     def __init__(self, config={}, size=(8, 8), frames_per_second=30, foreground=False):
@@ -19,8 +20,8 @@ class Simulator(object):
             game_name = DEFAULT_GAME
         game = GAMES[game_name]
         self.arena = game(**config)
-
-        self.display = Display(self.arena)
+        
+        self.display = Display(self.arena, GAME_CODES[game_name])
 
         self.foreground = foreground
         self.frames_per_second = frames_per_second

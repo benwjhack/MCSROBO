@@ -14,7 +14,8 @@ def get_surface(name):
     return sprites[name]
 
 class Display(object):
-    def __init__(self, arena):
+    def __init__(self, arena, game):
+        self.game = game
         self.arena = arena
         arena_w, arena_h = self.arena.size
         self.size = (arena_w * PIXELS_PER_METER, arena_h * PIXELS_PER_METER)
@@ -47,6 +48,12 @@ class Display(object):
             object_width, object_height = surface.get_size()
             screen_location = (x - object_width / 2, y - object_height / 2)
             self._screen.blit(surface, screen_location)
+            """if self.game == 2 and obj.grabbable:
+                def line(start, end, colour=(0,0,0)):
+                    pygame.draw.line(surface, colour,self.to_pixel_coord(start), self.to_pixel_coord(end),2)
+                #print obj.location
+                twoy = self.from_pixel_coord((2,0))[0]
+                line((obj.location[0]-twoy,obj.location[1]-twoy), (obj.location[0]-twoy,obj.location[1]+obj.WIDTH+twoy)) THIS DOESN'T WORK"""
 
         pygame.display.flip()
 
@@ -63,5 +70,13 @@ class Display(object):
         offset_y = arena.size[1] / 2
         x, y = world_coord
         x, y = ((x + offset_x) * PIXELS_PER_METER, (y + offset_y) * PIXELS_PER_METER)
+        return (x, y)
+
+    def from_pixel_coord(self, world_coord, arena=None):
+        if arena is None: arena = self.arena
+        offset_x = arena.size[0] / 2
+        offset_y = arena.size[1] / 2
+        x, y = world_coord
+        x, y = (x/PIXELS_PER_METER-offset_x, y/PIXELS_PER_METER-offset_y)
         return (x, y)
 

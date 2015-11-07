@@ -18,7 +18,7 @@ args = parser.parse_args()
 robot_scripts = args.robot_scripts
 prompt = "Enter the names of the Python files to run, separated by commas: "
 while not robot_scripts:
-    robot_script_names = raw_input(prompt).split(',')
+    robot_script_names = raw_input(prompt).strip(' ').split(',')
     if robot_script_names == ['']: continue
     robot_scripts = [open(s.strip()) for s in robot_script_names]
 

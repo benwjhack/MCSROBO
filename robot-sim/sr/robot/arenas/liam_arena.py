@@ -5,7 +5,7 @@ from random import random
 from math import pi
 
 from arena import Arena, ARENA_MARKINGS_COLOR, ARENA_MARKINGS_WIDTH
-from ..markers import Token
+from ..markers import Token, Faces
 from ..game_object import GameObject
 
 import pypybox2d
@@ -46,6 +46,9 @@ class CTFWall(GameObject):
     surface_name = 'sr/wall.png'
 
 class LiamArena(Arena):
+    team_colours = [[255,165,0],[255,242,0],[237,28,36],[63,72,204]]
+    default_colour = [195,195,195]
+    
     start_locations = [(-3.6, -3.6),
                        ( 3.6, -3.6),
                        ( 3.6,  3.6),
@@ -61,6 +64,9 @@ class LiamArena(Arena):
         #self._init_walls()
         self._init_tokens(zone_flags)
 
+        self.images = None
+
+
     def _init_tokens(self, zone_flags):
         if zone_flags:
             token_locations = []
@@ -73,13 +79,16 @@ class LiamArena(Arena):
         for i, location in enumerate(token_locations):
             token = Token(self, i, damping=0.5)
             if  i == 0 :
-                token.face = 2
-            elif i == 2 :
-                token.face = 3
+                token.faces = Faces([2,1,5,3,0,4])
             elif i == 6 :
-                token.face = 4
+                token.faces = Faces([3,0,2,5,4,1])
             elif i == 8 :
-                token.face = 5
+                token.faces = Faces([4,1,0,3,5,2])
+            elif i == 2 :
+                token.faces = Faces([5,3,2,1,4,0])
+            else:
+                token.faces = Faces([0,1,2,3,4,4])
+            token.face = token.faces[0]
             
             token.location = location
             token.heading = 0
@@ -116,7 +125,16 @@ class LiamArena(Arena):
             line((-start_y, -start_x), (-end_y, -end_x))
             line((start_y, -start_x), (end_y, -end_x))
 
+        if self.images == None:
+            images = [pygame.image.load(r"sr/"+str(name+2)+"b.png").convert() for name in range(4)]
+            self.images = [pygame.transform.scale(picture, (picture.get_rect().width*5, picture.get_rect().height*5)) for picture in images]
+
+        surface.blit(self.images[0], self.images[0].get_rect())
+        surface.blit(self.images[1], self.images[1].get_rect().move(surface.get_width()-images[1].get_width()*5, 0))
+        surface.blit(self.images[2], self.images[2].get_rect().move(surface.get_width()-images[2].get_width()*5, surface.get_height()-images[2].get_height()*5))
+        surface.blit(self.images[3], self.images[3].get_rect().move(0, surface.get_height()-images[3].get_height()*5))
+
         line_symmetric((2, 4), (3, 3))
-        line_symmetric((3, 0.15), (4, 0.15))
-        line_symmetric((1.5, 0.15), (0.825, 0.825))
+        """line_symmetric((3, 0.15), (4, 0.15))
+        line_symmetric((1.5, 0.15), (0.825, 0.825))"""
 

@@ -53,6 +53,9 @@ while True:
                     print "Gotcha!"
                     turn(50, 0.5)
                     drive(50, 1)
+                    for _ in range(5):
+                        R.rotate(1)
+                        time.sleep(1)
                     R.release()
                     drive(-50, 0.5)
                 else:

@@ -23,6 +23,10 @@ class AlreadyHoldingSomethingException(exceptions.Exception):
     def __str__(self):
         return "The robot is already holding something."
 
+class NotHoldingSomethingException(exceptions.Exception):
+    def __str__(self):
+        return "The robot is not holding anything."
+
 class MotorChannel(object):
     def __init__(self, robot):
         self._power = 0
@@ -171,6 +175,12 @@ class SimRobot(GameObject):
             return True
         else:
             return False
+
+    def rotate(self, direction):
+        if self._holding is None:
+            raise NotHoldingSomethingException()
+
+        self._holding.rotate(direction)
 
     def release(self):
         if self._holding is not None:
