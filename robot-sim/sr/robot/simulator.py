@@ -2,8 +2,7 @@ from __future__ import division
 
 import threading, time, pygame
 
-from arenas import PiratePlunderArena, CTFArena
-from arenas.liam_arena import *
+from arenas import PiratePlunderArena, CTFArena, LiamArena
 from display import Display
 
 DEFAULT_GAME = 'liam'
