@@ -10,6 +10,7 @@ DEFAULT_GAME = 'liam'
 GAMES = {'pirate-plunder': PiratePlunderArena,
          'ctf': CTFArena, 'liam': LiamArena}
 GAME_CODES = {'pirate-plunder':0, 'ctf':1, 'liam': 2}
+GAME_CODE = GAME_CODES[DEFAULT_GAME]
 
 class Simulator(object):
     def __init__(self, config={}, size=(8, 8), frames_per_second=30, foreground=False):
@@ -19,9 +20,10 @@ class Simulator(object):
         except KeyError:
             game_name = DEFAULT_GAME
         game = GAMES[game_name]
+        self.GAME_CODE = GAME_CODES[game_name]
         self.arena = game(**config)
         
-        self.display = Display(self.arena, GAME_CODES[game_name])
+        self.display = Display(self.arena, self.GAME_CODE)
 
         self.foreground = foreground
         self.frames_per_second = frames_per_second

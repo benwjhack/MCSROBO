@@ -113,6 +113,7 @@ class SimRobot(GameObject):
                                                (-half_width,  half_width)],
                                               density=500*0.12) # MDF @ 12cm thickness
         simulator.arena.objects.append(self)
+        self._sim = simulator
 
 
     ## Internal methods ##
@@ -171,7 +172,10 @@ class SimRobot(GameObject):
                                                                               self._holding._body,
                                                                               local_anchor_a=(GRABBER_OFFSET, 0),
                                                                               local_anchor_b=(0, 0))
-            self._holding.grab()
+            if self._sim.GAME_CODE == 2:
+                self._holding.grab(self)
+            else:
+                self._holding.grab(None)
             return True
         else:
             return False
@@ -179,12 +183,15 @@ class SimRobot(GameObject):
     def rotate(self, direction):
         if self._holding is None:
             raise NotHoldingSomethingException()
-
+        
         self._holding.rotate(direction)
 
     def release(self):
         if self._holding is not None:
-            self._holding.release()
+            if self._sim.GAME_CODE == 2:
+                self._holding.release(self)
+            else:
+                self._holding.release(None)
             if hasattr(self._holding, '_body'):
                 with self.lock, self.arena.physics_lock:
                     self._body.world.destroy_joint(self._holding_joint)

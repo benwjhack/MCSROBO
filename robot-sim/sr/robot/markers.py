@@ -75,10 +75,14 @@ class Token(GameObject):
                                           restitution=0.2,
                                           friction=0.3)
 
-    def grab(self):
-        if self.faces != None:
-            #for i in range():
-            pass
+    def grab(self, robot):
+        if robot != None:
+            self._body.angle = round(self._body.angle/(pi/2))*pi/2
+            self.origHeading = self._body.angle
+            robot_heading = round(robot.heading/(pi/2))+1
+            #print (robot_heading-self._body.angle/(pi/2))
+            for i in range(int(robot_heading-self._body.angle/(pi/2))%4):
+                self.faces.rotate_y(0)
         self.grabbed = True
 
     def rotate(self, direction):
@@ -91,7 +95,13 @@ class Token(GameObject):
         else:
             raise Exception("No. Not this game")
 
-    def release(self):
+    def release(self, robot):
+        if robot != None:
+            self._body.angle = round(self._body.angle/(pi/2))*pi/2
+            origHeading = round(self.origHeading/(pi/2))+1
+            #print (origHeading-self._body.angle/(pi/2))
+            for i in range(int(origHeading-self._body.angle/(pi/2))%4):
+                self.faces.rotate_y(0)
         self.grabbed = False
 
     @property

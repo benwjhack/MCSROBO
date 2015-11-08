@@ -51,10 +51,7 @@ class CTFArena(Arena):
                        ( 3.6,  3.6),
                        (-3.6,  3.6)]
 
-    start_headings = [0.25*pi,
-                      0.75*pi,
-                      -0.75*pi,
-                      -0.25*pi]
+    start_headings = [0.5*pi,pi,pi,pi]
 
     def __init__(self, objects=None, wall_markers=True, zone_flags=True):
         super(CTFArena, self).__init__(objects, wall_markers)
