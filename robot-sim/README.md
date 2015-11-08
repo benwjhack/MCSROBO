@@ -61,6 +61,19 @@ To drop the token, call the `R.release` method.
 
 Cable-tie flails are not implemented.
 
+### Turning Markers ###
+
+The robot can turn tokens it has grabbed, if it is in a Sunny Side Up game, using the R.rotate() function.
+One parametre must be passed, saying which way the token is to be rotated. 0 represents anticlockwise z, 1 rolling over the top (by x), 2 clockwise z, 3 the opposite of 1, 4 clockwise from a top down perspective, 5 anticlockwise from a top down perspective.
+For example:
+
+R.rotate(1)
+R.rotate(0)
+R.rotate(3)
+R.rotate(4)
+
+Would end up with the token in the same rotation as it had been picked up
+
 ### Vision ###
 
 To help the robot find tokens and navigate, each token has markers stuck to it, as does each wall. The `R.see` method returns a list of all the markers the robot can see, as `Marker` objects. The robot can only see markers which it is facing towards.

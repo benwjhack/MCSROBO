@@ -83,7 +83,10 @@ class Token(GameObject):
 
     def rotate(self, direction):
         if self.faces != None:
-            self.faces.roll(direction)
+            if direction < 4:
+                self.faces.roll(direction)
+            else:
+                self.faces.rotate_y(direction-3)
             self.face = self.faces[0]
         else:
             raise Exception("No. Not this game")
