@@ -1,7 +1,4 @@
-import sys
-import yaml
-import threading
-import argparse, sys
+import sys, yaml, threading, argparse, utility
 from math import pi
 
 from sr.robot import *
@@ -18,7 +15,7 @@ args = parser.parse_args()
 robot_scripts = args.robot_scripts
 prompt = "Enter the names of the Python files to run, separated by commas: "
 while not robot_scripts:
-    robot_script_names = raw_input(prompt).strip(' ').split(',')
+    robot_script_names = raw_input(prompt).split(',')
     if robot_script_names == ['']: continue
     robot_scripts = [open(s.strip()) for s in robot_script_names]
 
@@ -27,7 +24,7 @@ with args.config as f:
 
 sim = Simulator(config, foreground=True)
 
-class RobotThread(threading.Thread):
+class RobotThread(utility.ThreadWithExc):
     def __init__(self, zone, script, *args, **kwargs):
         threading.Thread.__init__(self, *args, **kwargs)
         self.zone = zone
@@ -43,10 +40,14 @@ class RobotThread(threading.Thread):
             return robot_object
         exec self.script in {'Robot': robot}
 
+threads = []
+
 for zone, robot in enumerate(robot_scripts):
     thread = RobotThread(zone, robot)
     thread.start()
+    threads.append(thread)
 
+sim.set_robots(threads)
 sim.run()
 
-sys.exit(0)
+[s.close() for s in robot_scripts]

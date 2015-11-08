@@ -1,6 +1,6 @@
 from __future__ import division
 
-import threading, time, pygame
+import threading, time, pygame, sys
 
 from arenas import PiratePlunderArena, CTFArena, LiamArena
 from display import Display
@@ -36,6 +36,9 @@ class Simulator(object):
             raise RuntimeError('Simulator runs in the background. Try passing foreground=True')
         self._main_loop(self.frames_per_second)
 
+    def set_robots(self, robots):
+        self.robots = robots
+
     def _main_loop(self, frames_per_second):
         clock = pygame.time.Clock()
 
@@ -47,5 +50,10 @@ class Simulator(object):
 
             self.display.tick(1/frames_per_second)
             clock.tick(frames_per_second)
-
+        
+        for robot in self.robots:
+            robot.raiseExc(KeyboardInterrupt)
+        
         pygame.quit()
+        sys.exit(0)
+        

@@ -50,9 +50,9 @@ class Token(GameObject):
             return # Slight hack: deal with the initial setting from the constructor
         self._body.angle = _new_heading
         if round(_new_heading/(pi/2)) < round(self.heading/(pi/2)):
-            pass
+            self.faces.rotate_y(1)
         elif round(_new_heading/(pi/2)) > round(self.heading/(pi/2)):
-            pass
+            self.faces.rotate_y(0)
     
     def __init__(self, arena, number, damping):
         self._body = arena._physics_world.create_body(position=(0, 0),
