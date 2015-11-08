@@ -55,6 +55,7 @@ class Token(GameObject):
             self.faces.rotate_y(0)
     
     def __init__(self, arena, number, damping):
+        self.faces = None
         self._body = arena._physics_world.create_body(position=(0, 0),
                                                       angle=0,
                                                       linear_damping=damping,
@@ -75,18 +76,27 @@ class Token(GameObject):
                                           friction=0.3)
 
     def grab(self):
+        if self.faces != None:
+            #for i in range():
+            pass
         self.grabbed = True
 
     def rotate(self, direction):
-        self.faces.roll(direction)
-        self.face = self.faces[0]
+        if self.faces != None:
+            self.faces.roll(direction)
+            self.face = self.faces[0]
+        else:
+            raise Exception("No. Not this game")
 
     def release(self):
         self.grabbed = False
 
     @property
     def surface_name(self):
-        return 'sr/'+str(self.face%6)+'.png'
+        if self.faces != None:
+            return 'sr/'+str(self.face%6)+'.png'
+        else:
+            return 'sr/token{0}.png'.format('_grabbed' if self.grabbed else '')
 
 class WallMarker(GameObject):
     surface_name = 'sr/wall_marker.png'

@@ -52,7 +52,10 @@ class Simulator(object):
             clock.tick(frames_per_second)
         
         for robot in self.robots:
-            robot.raiseExc(KeyboardInterrupt)
+            try:
+                robot.raiseExc(KeyboardInterrupt)
+            except threading.ThreadError:
+                pass
         
         pygame.quit()
         sys.exit(0)
