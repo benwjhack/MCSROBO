@@ -52,6 +52,7 @@ class Token(GameObject):
             self.oldHeading -= pi/2
             self.oldHeading %= (pi*2)
             print "current heading:", self._body.angle, ", old heading:", self.oldHeading
+        self._body.angle = self._body.angle % (pi/2)
         self.oldHeading = self._body.angle
         return self._body.angle
 
@@ -89,6 +90,7 @@ class Token(GameObject):
             self.origHeading = self._body.angle
             robot_heading = round(robot.heading/(pi/2))+1
             #print (robot_heading-self._body.angle/(pi/2))
+            # CHANGE THIS SO IT ROTATES TO FACES FRONT
             for i in range(int(robot_heading-self._body.angle/(pi/2))%4):
                 self.faces.rotate_y(0)
         self.grabbed = True
