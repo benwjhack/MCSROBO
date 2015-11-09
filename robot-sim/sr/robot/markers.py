@@ -42,12 +42,12 @@ class Token(GameObject):
 
     @property
     def heading(self):
-        while round(self._body.angle/(pi/2)) < round(self.oldHeading/(pi/2)):
+        while round(self._body.angle/(pi/2))%4 < round(self.oldHeading/(pi/2))%4:
             self.faces.rotate_y(1)
             self.oldHeading += pi/2
             self.oldHeading %= (pi*2)
             print "1current heading:", self._body.angle, ", old heading:", self.oldHeading
-        while round(self._body.angle/(pi/2)) > round(self.oldHeading/(pi/2)):
+        while round(self._body.angle/(pi/2))%4 > round(self.oldHeading/(pi/2))%4:
             self.faces.rotate_y(0)
             self.oldHeading -= pi/2
             self.oldHeading %= (pi*2)
