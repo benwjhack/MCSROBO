@@ -1,3 +1,6 @@
+
+This version is for Sunny Side Up game. It doesn't work. The old games work. I think. And rotating kinda works
+
 Student Robotics Robot Simulator
 ================================
 
