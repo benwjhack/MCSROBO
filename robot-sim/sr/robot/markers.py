@@ -45,9 +45,11 @@ class Token(GameObject):
         while round(self._body.angle/(pi/2)) < round(self.oldHeading/(pi/2)):
             self.faces.rotate_y(1)
             self.oldHeading += pi/2
+            print "1current heading:", self._body.angle, ", old heading:", self.oldHeading
         while round(self._body.angle/(pi/2)) > round(self.oldHeading/(pi/2)):
             self.faces.rotate_y(0)
             self.oldHeading -= pi/2
+            print "current heading:", self._body.angle, ", old heading:", self.oldHeading
         self.oldHeading = self._body.angle
         return self._body.angle
 
