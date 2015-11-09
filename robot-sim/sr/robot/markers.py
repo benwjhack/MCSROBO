@@ -42,10 +42,11 @@ class Token(GameObject):
 
     @property
     def heading(self):
-        if round(_new_heading/(pi/2)) < round(self.heading/(pi/2)):
+        while round(self._body.angle/(pi/2)) < round(self.oldHeading/(pi/2)):
             self.faces.rotate_y(1)
-        elif round(_new_heading/(pi/2)) > round(self.heading/(pi/2)):
+        while round(self._body.angle/(pi/2)) > round(self.oldHeading/(pi/2)):
             self.faces.rotate_y(0)
+        self.oldHeading = self._body.angle
         return self._body.angle
 
     @heading.setter
@@ -74,6 +75,7 @@ class Token(GameObject):
                                           density=1,
                                           restitution=0.2,
                                           friction=0.3)
+        self.oldHeading = self._body.angle
 
     def grab(self, robot):
         if robot != None:
