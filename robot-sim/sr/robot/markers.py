@@ -42,6 +42,10 @@ class Token(GameObject):
 
     @property
     def heading(self):
+        if round(_new_heading/(pi/2)) < round(self.heading/(pi/2)):
+            self.faces.rotate_y(1)
+        elif round(_new_heading/(pi/2)) > round(self.heading/(pi/2)):
+            self.faces.rotate_y(0)
         return self._body.angle
 
     @heading.setter
@@ -49,10 +53,6 @@ class Token(GameObject):
         if self._body is None:
             return # Slight hack: deal with the initial setting from the constructor
         self._body.angle = _new_heading
-        if round(_new_heading/(pi/2)) < round(self.heading/(pi/2)):
-            self.faces.rotate_y(1)
-        elif round(_new_heading/(pi/2)) > round(self.heading/(pi/2)):
-            self.faces.rotate_y(0)
     
     def __init__(self, arena, number, damping):
         self.faces = None
@@ -90,7 +90,7 @@ class Token(GameObject):
             if direction < 4:
                 self.faces.roll(direction)
             else:
-                self.faces.rotate_y(direction-3)
+                self.heading = self.heading + pi/2
             self.face = self.faces[0]
         else:
             raise Exception("No. Not this game")
