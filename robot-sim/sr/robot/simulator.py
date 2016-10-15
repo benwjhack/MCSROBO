@@ -2,14 +2,14 @@ from __future__ import division
 
 import threading, time, pygame, sys
 
-from arenas import PiratePlunderArena, CTFArena, LiamArena
+from arenas import PiratePlunderArena, CTFArena, LiamArena, abcArena
 from display import Display
 
 DEFAULT_GAME = 'liam'
 
 GAMES = {'pirate-plunder': PiratePlunderArena,
-         'ctf': CTFArena, 'liam': LiamArena}
-GAME_CODES = {'pirate-plunder':0, 'ctf':1, 'liam': 2}
+         'ctf': CTFArena, 'liam': LiamArena, "abc": abcArena}
+GAME_CODES = {'pirate-plunder':0, 'ctf':1, 'liam': 2, "abc": 3}
 GAME_CODE = GAME_CODES[DEFAULT_GAME]
 
 class Simulator(object):
